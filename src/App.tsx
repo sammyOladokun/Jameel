@@ -24,6 +24,8 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
     headset: <><path d="M3 13v-2a9 9 0 0 1 18 0v2"/><rect x="3" y="12" width="4" height="7" rx="2"/><rect x="17" y="12" width="4" height="7" rx="2"/><path d="M17 19a5 5 0 0 1-5 3h-1"/></>,
     arrow: <><path d="M4 12h15M13 5l7 7-7 7"/></>,
     check: <path d="m5 12 4 4L19 6"/>,
+    collection: <><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></>,
+    sparkle: <><path d="m12 3 1.9 5.8L20 11l-6.1 2.2L12 19l-1.9-5.8L4 11l6.1-2.2L12 3Z"/><path d="m19 15 .9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z"/></>,
   }
   return <svg {...common}>{paths[name]}</svg>
 }
@@ -45,12 +47,11 @@ function App() {
         <div className="hero-backdrop" />
         <header className="header container">
           <a className="brand" href="#home" aria-label="Jameel home"><Icon name="gem" size={35}/><span>JAMEEL<small>GOLD · DIAMONDS · WATCHES</small></span></a>
-          <nav className="main-nav" aria-label="Main navigation"><a className="active" href="#home">Home</a><a href="#collection">Shop</a><a href="#collection">Collections</a><a href="#why-us">About</a><a href="#footer">Contact</a></nav>
+          <nav className="main-nav" aria-label="Main navigation"><a className="active" href="#home">Home</a><a href="#collection">Shop</a><a href="#collection">Collections</a><a href="#testimonials">About</a><a href="#footer">Contact</a></nav>
           <div className="header-actions"><button aria-label="Search"><Icon name="search"/></button><button aria-label="Account"><Icon name="user"/></button><button aria-label={`Wishlist, ${favorites.length} items`}><Icon name="heart"/></button><button className="cart-button" aria-label={`Shopping bag, ${cartCount} items`}><Icon name="bag"/><span>{cartCount}</span></button></div>
         </header>
 
         <div className="hero-content container">
-          <p className="eyebrow">Premium jewellery & watches</p>
           <h1>Timeless elegance<br/>for every moment</h1>
           <p className="hero-copy">Exquisite gold, dazzling diamonds, and statement watches<br className="desktop-break"/> crafted for those who value luxury, style and legacy.</p>
           <a className="button button-light" href="#collection">Shop collection <Icon name="arrow" size={16}/></a>
@@ -65,12 +66,14 @@ function App() {
         <div className="trust-item"><Icon name="headset" size={32}/><span><b>Here for you</b><small>Personal client care</small></span></div>
       </div></section>
 
-      <section className="section container" id="why-us">
-        <SectionHeading eyebrow="Why choose us" title="More than just jewellery" subtitle="We offer more than beautiful pieces — we deliver trust, quality and a luxury experience you can count on."/>
-        <div className="benefits-grid">
-          <article className="benefit-card"><span className="icon-ring"><Icon name="gem" size={30}/></span><div><h3>Premium quality</h3><p>Only the finest gold, diamonds and watches.</p></div></article>
-          <article className="benefit-card"><span className="icon-ring"><Icon name="shield" size={30}/></span><div><h3>Trusted authenticity</h3><p>Every piece is certified and professionally inspected.</p></div></article>
-          <article className="benefit-card"><span className="icon-ring"><Icon name="truck" size={30}/></span><div><h3>Elegant packaging</h3><p>Luxury packaging, perfect for gifting or self-indulgence.</p></div></article>
+      <section className="section testimonials-section container" id="testimonials">
+        <SectionHeading eyebrow="Kind words" title="Trusted by thousands" subtitle="Real people. Real experiences. Pieces made to last."/>
+        <div className="reviews-grid">
+          {[
+            { name: 'Daniel K.', place: 'Lagos, Nigeria', quote: 'The quality is unbelievable! My watch came exactly as shown and the packaging was top notch. I will definitely shop again.', initials: 'DK' },
+            { name: 'Amara T.', place: 'Abuja, Nigeria', quote: 'Jameel never disappoints. The chain is pure gold and the sparkle is real. Legit and trustworthy!', initials: 'AT' },
+            { name: 'Tunde S.', place: 'Port Harcourt, Nigeria', quote: 'Fast delivery, excellent customer service and premium quality. This is my go-to jewellery store now.', initials: 'TS' },
+          ].map((review) => <article className="review-card" key={review.name}><div className="review-top"><span className="avatar">{review.initials}</span><span className="stars" aria-label="5 out of 5 stars">★★★★★</span></div><blockquote>“{review.quote}”</blockquote><b>{review.name}</b><small>{review.place}</small></article>)}
         </div>
       </section>
 
@@ -78,14 +81,15 @@ function App() {
         <SectionHeading eyebrow="How it works" title="Your perfect piece, made easy" subtitle="Shop in just a few clicks and have your favourite jewellery delivered to your door."/>
         <div className="steps-grid">
           {[
-            { title: 'Browse collection', copy: 'Explore our range of gold, diamond and luxury jewellery.', image: 'photo-1611652022419-a9419f74343d', label: 'Discover the collection' },
-            { title: 'Choose your favourite', copy: 'Find a piece that feels like it was made for you.', image: 'photo-1523170335258-f5ed11844a49', label: 'Find your favourite' },
+            { title: 'Browse collection', copy: 'Explore our range of gold, diamond and luxury jewellery.', icon: 'collection', label: 'Explore the collection' },
+            { title: 'Choose your favourite', copy: 'Find a piece that feels like it was made for you.', icon: 'heart', label: 'Choose a favourite' },
             { title: 'Checkout securely', copy: 'Pay safely with your preferred payment option.', icon: 'payments' },
-            { title: 'Delivered with care', copy: 'Your order arrives safely, insured and beautifully packed.', image: 'photo-1605100804763-247f67b3557e', label: 'Beautifully packaged' },
-            { title: 'Wear it your way', copy: 'Enjoy a timeless piece and make every moment special.', image: 'photo-1611591437281-460bfbe1220a', label: 'A piece to treasure' },
+            { title: 'Delivered with care', copy: 'Your order arrives safely, insured and beautifully packed.', icon: 'truck', label: 'Careful delivery' },
+            { title: 'Wear it your way', copy: 'Enjoy a timeless piece and make every moment special.', icon: 'sparkle', label: 'A piece to treasure' },
           ].map((step, index) => <article className="step-card" key={step.title}>
-            <span className="step-number">0{index + 1}</span><h3>{step.title}</h3><p>{step.copy}</p>
-            {step.image ? <img src={imageUrl(step.image, 480)} alt={step.label} loading="lazy"/> : <div className="payment-choices"><span>VISA</span><span className="mastercard">●●</span><span>PayPal</span><span><Icon name="shield" size={15}/> Secure payment</span></div>}
+            <span className="step-number">0{index + 1}</span><h3>{step.title}</h3>
+            {step.icon === 'payments' ? <div className="payment-choices"><span>VISA</span><span className="mastercard">●●</span><span>PayPal</span><span><Icon name="shield" size={15}/> Secure payment</span></div> : <div className="step-visual" role="img" aria-label={step.label}><Icon name={step.icon ?? 'shield'} size={34}/></div>}
+            <p>{step.copy}</p>
           </article>)}
         </div>
       </section>
@@ -101,23 +105,34 @@ function App() {
         </div>
       </section>
 
-      <section className="section testimonials-section container">
-        <SectionHeading eyebrow="Kind words" title="Trusted by thousands" subtitle="Real people. Real experiences. Pieces made to last."/>
-        <div className="reviews-grid">
-          {[
-            { name: 'Daniel K.', place: 'Lagos, Nigeria', quote: 'The quality is unbelievable! My watch came exactly as shown and the packaging was top notch. I will definitely shop again.', initials: 'DK' },
-            { name: 'Amara T.', place: 'Abuja, Nigeria', quote: 'Jameel never disappoints. The chain is pure gold and the sparkle is real. Legit and trustworthy!', initials: 'AT' },
-            { name: 'Tunde S.', place: 'Port Harcourt, Nigeria', quote: 'Fast delivery, excellent customer service and premium quality. This is my go-to jewellery store now.', initials: 'TS' },
-          ].map((review) => <article className="review-card" key={review.name}><div className="review-top"><span className="avatar">{review.initials}</span><span className="stars" aria-label="5 out of 5 stars">★★★★★</span></div><blockquote>“{review.quote}”</blockquote><b>{review.name}</b><small>{review.place}</small></article>)}
+      <footer className="footer" id="footer">
+        <div className="container footer-main">
+          <div className="footer-brand-block">
+            <a className="brand" href="#home"><Icon name="gem" size={34}/><span>JAMEEL<small>GOLD · DIAMONDS · WATCHES</small></span></a>
+            <p>Fine jewellery and watches, chosen to be treasured.</p>
+            <a className="footer-email" href="mailto:hello@jameel.ng">hello@jameel.ng</a>
+          </div>
+          <div className="footer-column">
+            <h3>Explore</h3>
+            <a href="#collection">Shop all</a><a href="#collection">Watches</a><a href="#collection">Jewellery</a>
+          </div>
+          <div className="footer-column">
+            <h3>Customer care</h3>
+            <a href="mailto:hello@jameel.ng?subject=Shipping%20and%20delivery">Shipping & delivery</a>
+            <a href="mailto:hello@jameel.ng?subject=Returns%20and%20exchanges">Returns & exchanges</a>
+            <a href="mailto:hello@jameel.ng?subject=Jewellery%20care">Jewellery care</a>
+          </div>
+          <div className="footer-column footer-contact">
+            <h3>Get in touch</h3>
+            <p>Questions about a piece? We’re happy to help.</p>
+            <a href="mailto:hello@jameel.ng">Email our team <Icon name="arrow" size={14}/></a>
+          </div>
         </div>
-      </section>
-
-      <footer className="footer" id="footer"><div className="container footer-inner">
-        <a className="brand" href="#home"><Icon name="gem" size={34}/><span>JAMEEL<small>GOLD · DIAMONDS · WATCHES</small></span></a>
-        <nav aria-label="Footer navigation"><a href="#home">Home</a><a href="#collection">Shop</a><a href="#collection">Collections</a><a href="#why-us">About</a><a href="mailto:hello@jameel.ng">Contact</a></nav>
-        <div className="social-links" aria-label="Social media"><a href="#footer" aria-label="Instagram">ig</a><a href="#footer" aria-label="TikTok">tk</a><a href="#footer" aria-label="Facebook">f</a></div>
-        <span className="footer-note">Luxury is a feeling.</span>
-      </div><p className="copyright">© {new Date().getFullYear()} Jameel. Made to be treasured.</p></footer>
+        <div className="container footer-bottom">
+          <span>© {new Date().getFullYear()} Jameel. Made to be treasured.</span>
+          <span>Certified pieces · Insured delivery · Secure checkout</span>
+        </div>
+      </footer>
     </main>
   )
 }

@@ -1,0 +1,73 @@
+.trust-grid {
+  padding-block: 42px;
+}
+
+.trust-item {
+  min-height: 68px;
+}
+
+.trust-item > svg {
+  width: 37px;
+  height: 37px;
+  color: #f5f5f4;
+}
+
+.trust-item b {
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.trust-item small {
+  color: #d2d1ce;
+  font-size: 10px;
+}
+
+@media (min-width: 601px) {
+  .trust-grid {
+    padding-block: 18px;
+  }
+
+  .trust-item {
+    min-height: 43px;
+  }
+
+  .trust-item > svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .trust-item b {
+    color: inherit;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .trust-item small {
+    color: #b4b1ae;
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 600px) {
+  .trust-grid {
+    padding-block: 20px;
+  }
+
+  .trust-item {
+    min-height: 88px;
+  }
+
+  .trust-item b {
+    font-size: 11px;
+  }
+
+  .trust-item small {
+    font-size: 9px;
+  }
+
+  .trust-item > svg {
+    width: 30px;
+    height: 30px;
+  }
+}

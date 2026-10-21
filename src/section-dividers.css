@@ -1,0 +1,14 @@
+.section {
+  position: relative;
+}
+
+.section::before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  height: 1px;
+  content: '';
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, transparent, rgba(220,226,235,.28) 12%, rgba(220,226,235,.28) 88%, transparent);
+}

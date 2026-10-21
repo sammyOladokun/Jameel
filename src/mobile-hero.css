@@ -1,0 +1,13 @@
+@media (max-width: 600px) {
+  .hero {
+    height: 72svh;
+    min-height: 520px;
+  }
+}
+
+@media (min-width: 851px) {
+  .hero {
+    height: min(620px, 78vh);
+    min-height: 500px;
+  }
+}
