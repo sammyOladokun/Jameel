@@ -1,0 +1,51 @@
+body {
+  background-color: #050505;
+  background-image:
+    radial-gradient(ellipse at 8% 34%, rgba(229,235,244,.09), transparent 37%),
+    radial-gradient(ellipse at 91% 61%, rgba(184,190,200,.075), transparent 40%),
+    linear-gradient(145deg, #08090b, #050505 48%, #08090b);
+  background-attachment: fixed;
+}
+
+.reviews-grid {
+  gap: 0;
+}
+
+.review-card {
+  position: relative;
+  min-height: 154px;
+  padding: 16px 22px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.review-card:not(:last-child)::after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 1px;
+  height: 50%;
+  content: '';
+  transform: translateY(-50%);
+  background: linear-gradient(transparent, rgba(220,226,235,.42), transparent);
+}
+
+@media (max-width: 600px) {
+  .review-card {
+    min-height: unset;
+    padding: 15px 5px 19px;
+  }
+
+  .review-card:not(:last-child)::after {
+    top: auto;
+    right: auto;
+    bottom: 0;
+    left: 25%;
+    width: 50%;
+    height: 1px;
+    transform: none;
+    background: linear-gradient(90deg, transparent, rgba(220,226,235,.42), transparent);
+  }
+}

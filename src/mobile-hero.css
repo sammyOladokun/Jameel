@@ -3,6 +3,10 @@
     height: 72svh;
     min-height: 520px;
   }
+
+  .hero-content {
+    padding-top: clamp(72px, 16vh, 128px);
+  }
 }
 
 @media (min-width: 851px) {

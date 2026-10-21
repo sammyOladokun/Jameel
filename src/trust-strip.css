@@ -59,15 +59,18 @@
   }
 
   .trust-item b {
-    font-size: 11px;
+    color: #f1f0ed;
+    font-size: 10px;
+    font-weight: 500;
   }
 
   .trust-item small {
-    font-size: 9px;
+    color: #bdbbb7;
+    font-size: 8px;
   }
 
   .trust-item > svg {
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
   }
 }

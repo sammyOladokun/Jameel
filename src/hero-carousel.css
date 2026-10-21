@@ -1,0 +1,64 @@
+.hero {
+  background-image: none;
+  background-color: #050505;
+}
+
+.hero::before,
+.hero-backdrop {
+  z-index: 1;
+}
+
+.hero-slides {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: flex;
+  transition: transform .9s cubic-bezier(.22,.68,0,1);
+}
+
+.hero-slide {
+  flex: 0 0 100%;
+  background-position: center 48%;
+  background-size: cover;
+}
+
+.header,
+.hero-content {
+  z-index: 2;
+}
+
+.hero-carousel {
+  position: absolute;
+  z-index: 2;
+  right: 32px;
+  bottom: 19px;
+}
+
+.hero-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hero-dots button {
+  width: 6px;
+  height: 6px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: rgba(255,255,255,.5);
+  cursor: pointer;
+  transition: width .2s, background .2s;
+}
+
+.hero-dots button.active {
+  width: 19px;
+  background: #fff;
+}
+
+@media (max-width: 600px) {
+  .hero-carousel {
+    right: 18px;
+    bottom: 14px;
+  }
+}
