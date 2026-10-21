@@ -1,9 +1,10 @@
 import { useMemo, useState, type ReactNode } from 'react'
 import './catalog.css'
 
-type Product = { name: string; type: string; category: string; gender: string; material: string; price: number; image: string; reviews: number }
-const photo = (id: string, width = 700) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`
-const inventory: Product[] = [
+export type Product = { name: string; type: string; category: string; gender: string; material: string; price: number; image: string; reviews: number }
+export const productPhoto = (id: string, width = 700) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`
+export const productSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+export const inventory: Product[] = [
   { name: 'Rolex Datejust 41', type: 'Luxury watch', category: 'Watches', gender: 'Men', material: 'Stainless steel', price: 13800000, image: 'photo-1523170335258-f5ed11844a49', reviews: 24 },
   { name: 'Miami Cuban Chain (10mm)', type: 'Gold chain', category: 'Chains', gender: 'Men', material: 'Gold', price: 6200000, image: 'photo-1611591437281-460bfbe1220a', reviews: 18 },
   { name: 'Diamond Tennis Bracelet', type: 'Bracelet', category: 'Bracelets', gender: 'Women', material: 'Diamond', price: 8900000, image: 'photo-1611652022419-a9419f74343d', reviews: 32 },
@@ -34,7 +35,6 @@ function CatalogIcon({ name, size = 20, fill = false }: { name: string; size?: n
     bracelet: <ellipse cx="12" cy="12" rx="10" ry="5.5"/>,
     ring: <><path d="M7 8.5 9 4h6l2 4.5"/><ellipse cx="12" cy="14" rx="8" ry="6.5"/></>,
     handChain: <><path d="M7 4c0 4 1.5 6 5 8 3.5-2 5-4 5-8"/><path d="M12 12v5M9 19l3-2 3 2"/><circle cx="12" cy="20" r="1.3"/></>,
-    gem: <><path d="m2 9 4-6h12l4 6-10 12L2 9Z"/><path d="M2 9h20M6 3l3 6 3-6 3 6 3-6M9 9l3 12 3-12"/></>,
     searchFilter: <><path d="M4 6h16M7 12h10M10 18h4"/><circle cx="8" cy="6" r="1"/></>,
     next: <path d="m9 18 6-6-6-6"/>,
     arrow: <><path d="M4 12h15M13 5l7 7-7 7"/></>,
@@ -97,14 +97,14 @@ export default function CatalogPage() {
         <CatalogFilter title="Gender">{['Men', 'Women', 'Unisex'].map((item) => <FilterChoice key={item} label={`${item} (${inventory.filter((product) => product.gender === item).length})`} checked={gender.includes(item)} onChange={() => toggle(item, gender, setGender)}/>)}</CatalogFilter>
         <CatalogFilter title="Material">{['Gold', 'Diamond', 'Platinum', 'Stainless steel'].map((item) => <FilterChoice key={item} label={`${item} (${inventory.filter((product) => product.material === item).length})`} checked={material.includes(item)} onChange={() => toggle(item, material, setMaterial)}/>)}</CatalogFilter>
         <CatalogFilter title="Price range">{['Under ₦2,000,000', '₦2,000,000 – ₦5,000,000', '₦5,000,001 – ₦10,000,000', 'Over ₦10,000,000'].map((item) => <FilterChoice key={item} label={item} checked={priceRanges.includes(item)} onChange={() => toggle(item, priceRanges, setPriceRanges)}/>)}</CatalogFilter>
-        <a href="#products" className="catalog-promo"><img src={photo('photo-1617038220319-276d3cfab638', 500)} alt="Fine jewellery styled for an evening"/><span><b>Luxury<br/>looks good<br/>on you</b><small>Premium materials. Timeless designs. Made for those who expect more.</small><strong>Shop all <CatalogIcon name="next" size={14}/></strong></span></a>
+        <a href="#products" className="catalog-promo"><img src={productPhoto('photo-1617038220319-276d3cfab638', 500)} alt="Fine jewellery styled for an evening"/><span><b>Luxury<br/>looks good<br/>on you</b><small>Premium materials. Timeless designs. Made for those who expect more.</small><strong>Shop all <CatalogIcon name="next" size={14}/></strong></span></a>
       </aside>
 
       <section className="catalog-listing">
         <div className="catalog-toolbar"><button className="catalog-mobile-filter" onClick={() => setFiltersOpen(true)}><CatalogIcon name="searchFilter" size={17}/> Filters{activeFilters > 0 && <span>{activeFilters}</span>}</button><p>Showing {visibleProducts.length ? (page - 1) * pageSize + 1 : 0}–{Math.min(page * pageSize, visibleProducts.length)} of {visibleProducts.length} products</p><label>Sort by: <select value={sort} onChange={(event) => setSort(event.target.value)}><option value="featured">Featured</option><option value="low">Price: low to high</option><option value="high">Price: high to low</option><option value="name">Name</option></select></label></div>
         {visibleProducts.length ? <div className="catalog-grid">{pageProducts.map((product) => <article className="catalog-item" key={product.name}>
-          <div className="catalog-item-photo"><img src={photo(product.image)} alt={product.name} loading="lazy"/><button className={`catalog-heart ${favorites.includes(product.name) ? 'saved' : ''}`} aria-label={`${favorites.includes(product.name) ? 'Remove' : 'Add'} ${product.name} ${favorites.includes(product.name) ? 'from' : 'to'} wishlist`} onClick={() => setFavorites((current) => current.includes(product.name) ? current.filter((name) => name !== product.name) : [...current, product.name])}><CatalogIcon name="heart" size={17} fill={favorites.includes(product.name)}/></button><button className="catalog-add" onClick={() => setCart((count) => count + 1)}>Add to bag</button></div>
-          <h2>{product.name}</h2><p>{product.type}</p><b>₦{product.price.toLocaleString('en-NG')}</b><div className="catalog-rating"><span>★★★★★</span><small>({product.reviews})</small></div>
+          <div className="catalog-item-photo"><a className="catalog-product-link" href={`/product/${productSlug(product.name)}`} aria-label={`View ${product.name}`}><img src={productPhoto(product.image)} alt={product.name} loading="lazy"/></a><button className={`catalog-heart ${favorites.includes(product.name) ? 'saved' : ''}`} aria-label={`${favorites.includes(product.name) ? 'Remove' : 'Add'} ${product.name} ${favorites.includes(product.name) ? 'from' : 'to'} wishlist`} onClick={() => setFavorites((current) => current.includes(product.name) ? current.filter((name) => name !== product.name) : [...current, product.name])}><CatalogIcon name="heart" size={17} fill={favorites.includes(product.name)}/></button></div>
+          <h2><a href={`/product/${productSlug(product.name)}`}>{product.name}</a></h2><p>{product.type}</p><b>₦{product.price.toLocaleString('en-NG')}</b><div className="catalog-rating"><span>★★★★★ <small>({product.reviews})</small></span><button className="catalog-add" onClick={() => setCart((count) => count + 1)}>Add to bag</button></div>
         </article>)}</div> : <div className="catalog-empty"><CatalogIcon name="search" size={28}/><h2>No pieces found</h2><p>Try adjusting your filters to explore more of the collection.</p><button onClick={clearFilters}>Clear filters</button></div>}
         {pageCount > 1 && <nav className="catalog-pages" aria-label="Product pages"><button aria-label="Previous page" disabled={page === 1} onClick={() => setPage((current) => current - 1)}><CatalogIcon name="next" size={14}/></button>{Array.from({ length: pageCount }, (_, index) => index + 1).map((number) => <button key={number} className={number === page ? 'current' : ''} aria-current={number === page ? 'page' : undefined} onClick={() => setPage(number)}>{number}</button>)}<button aria-label="Next page" disabled={page === pageCount} onClick={() => setPage((current) => current + 1)}><CatalogIcon name="next" size={14}/></button></nav>}
       </section>

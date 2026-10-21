@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import CatalogPage from './CatalogPage'
+import ProductDetailPage from './ProductDetailPage'
 
 type Product = { name: string; detail: string; price: string; category: string; image: string }
 
@@ -158,7 +159,10 @@ function SectionHeading({ eyebrow, title, subtitle }: { eyebrow: string; title: 
 }
 
 function App() {
-  return window.location.pathname.replace(/\/+$/, '') === '/catalog' ? <CatalogPage/> : <LandingPage/>
+  const path = window.location.pathname.replace(/\/+$/, '')
+  if (path === '/catalog') return <CatalogPage/>
+  if (path.startsWith('/product/')) return <ProductDetailPage/>
+  return <LandingPage/>
 }
 
 export default App
